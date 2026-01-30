@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.rows {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.cols {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: black;
+    position: relative;
+    user-select: none;
+}
+button {
+    margin-top: 1.3rem;
+    padding: 6px 15px;
+}
+.restart-btn {
+    z-index: 0;
+}
+main {
+    aspect-ratio: 1/1;
+    height: min(90vw - 2rem, 90vh - 2rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    background-color: rgb(255, 255, 255);
+}
+main > div.snek {
+    background-color: purple;
+    border: none;
+}
+main > div.hed, .coin.head {
+    background-color: rgb(197, 0, 197);
+    border: none;
+}
+
+.controls {
+    position: fixed;
+    bottom: 4rem;
+    right: 4rem;
+    aspect-ratio: 1/1;
+    width: 150px;
+    background-color: gray;
+    transform: rotate(45deg);
+    flex-wrap: wrap;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.controls > * {
+    aspect-ratio: 1/1;
+    width: 50%;
+}
+.controls > *:hover {
+    background-color: rgb(207, 207, 207);
+}
+.controls > *:active {
+    background-color: white;
+}
+
+.ded {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    display: none;
+    font-size: 3rem;
+    color: red;
+}
+.ded.active {
+    pointer-events: all;
+    display: flex;
+}
+
+.coin {
+    background-color: rgb(0, 183, 0);
+    border: 2rem solid white;
+}
