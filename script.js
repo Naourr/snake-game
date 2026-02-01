@@ -53,10 +53,11 @@ setInterval(() => {
     tick()
 }, 600)
 
-let left_bounds = [0,6,12,18,24,32]
-let right_bounds = [5,11,17,23,31,37]
-let up_bounds = [0,1,2,3,4,5]
-let down_bounds = [32,33,34,35,36,37]
+let left_bounds  = [0, 6, 12, 18, 24, 30]
+let right_bounds = [5, 11, 17, 23, 29, 35]
+let up_bounds    = [0, 1, 2, 3, 4, 5]
+let down_bounds  = [30, 31, 32, 33, 34, 35]
+
 function tick() {
     if (ded) {return}
 
