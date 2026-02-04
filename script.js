@@ -191,7 +191,7 @@ function tick() {
     })
 
     const occupied = document.querySelectorAll('.snek')
-    if (occupied.length == 37) {
+    if (occupied.length == 36) {
         deid.innerHTML = "Dammm, I couldnt even playtest this. Congratulationss"
         ded = true
     }
