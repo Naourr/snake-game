@@ -1,20 +1,30 @@
-const html_grids = document.querySelectorAll('main > div')
 const restart = document.querySelector('.restart-btn')
 const deid = document.querySelector('.ded')
+const main = document.querySelector('main')
+let html_grids
 let snek_grids
 let snek_growth_queue
 let snek_direction
 let last_direction
 let ded
 let coin_index
+let row_size = 7
 
 function start() {
+    main.innerHTML = ""
     ded = false
-    ded.innerHTML = "ded"
-    snek_grids = [0]
+    deid.innerHTML = "ded"
     snek_growth_queue = 1
     snek_direction = "right"
     last_direction = snek_direction
+    for (let i = 0; i < row_size; i++) {
+       for (let j = 0; j < row_size; j++) {
+            let div = document.createElement("div")
+            main.appendChild(div)
+        }
+    }
+    html_grids = document.querySelectorAll('main > div')
+    snek_grids = [0]
     coin_index = rand_index()
     render()
 }
@@ -53,11 +63,6 @@ setInterval(() => {
     tick()
 }, 600)
 
-let left_bounds  = [0, 6, 12, 18, 24, 30]
-let right_bounds = [5, 11, 17, 23, 29, 35]
-let up_bounds    = [0, 1, 2, 3, 4, 5]
-let down_bounds  = [30, 31, 32, 33, 34, 35]
-
 function tick() {
     if (ded) {return}
 
@@ -81,13 +86,13 @@ function tick() {
         }
         let looped = false
         let new_snek = snek_grids[0]
-        right_bounds.forEach(end => {
-            if (new_snek == end) {
-                new_snek -= 5
+        for (let i = 1; i < row_size +1 ; i++) {
+            if (new_snek == (row_size * i)-1) {
+                new_snek -= row_size -1
                 looped = true
                 snek_grids = [new_snek,...snek_grids]
             }
-        })
+        }
         if (looped == false) {
             new_snek += 1
             snek_grids = [new_snek,...snek_grids]
@@ -103,13 +108,13 @@ function tick() {
         }
         let looped = false
         let new_snek = snek_grids[0]
-        left_bounds.forEach(end => {
-            if (new_snek == end) {
-                new_snek += 5
+        for (let i = 0; i < row_size ; i++) {
+            if (new_snek == row_size * i) {
+                new_snek += row_size -1
                 looped = true
                 snek_grids = [new_snek,...snek_grids]
             }
-        })
+        }
         if (looped == false) {
             new_snek -= 1
             snek_grids = [new_snek,...snek_grids]
@@ -125,15 +130,15 @@ function tick() {
         }
         let looped = false
         let new_snek = snek_grids[0]
-        up_bounds.forEach(end => {
-            if (new_snek == end) {
-                new_snek += 30
+        for (let i = 0; i < row_size ; i++) {
+            if (new_snek == i) {
+                new_snek += row_size * (row_size -1)
                 looped = true
                 snek_grids = [new_snek,...snek_grids]
             }
-        })
+        }
         if (looped == false) {
-            new_snek -= 6
+            new_snek -= row_size
             snek_grids = [new_snek,...snek_grids]
         }
         last_direction = "up"
@@ -147,15 +152,15 @@ function tick() {
         }
         let looped = false
         let new_snek = snek_grids[0]
-        down_bounds.forEach(end => {
-            if (new_snek == end) {
-                new_snek -= 30
+        for (let i = (row_size*row_size) -1; i > row_size*(row_size-1) ; i--) {
+            if (new_snek == i) {
+                new_snek -= row_size * (row_size -1)
                 looped = true
                 snek_grids = [new_snek,...snek_grids]
             }
-        })
+        }
         if (looped == false) {
-            new_snek += 6
+            new_snek += row_size
             snek_grids = [new_snek,...snek_grids]
         }
         last_direction = "down"
@@ -191,7 +196,7 @@ function tick() {
     })
 
     const occupied = document.querySelectorAll('.snek')
-    if (occupied.length == 36) {
+    if (occupied.length == html_grids.length) {
         deid.innerHTML = "Dammm, I couldnt even playtest this. Congratulationss"
         ded = true
     }

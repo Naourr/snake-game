@@ -15,7 +15,9 @@
     align-items: center;
     flex-direction: column;
 }
-
+:root {
+    --row-size: 7;
+}
 body {
     height: 100vh;
     width: 100vw;
@@ -35,8 +37,8 @@ main {
     aspect-ratio: 1/1;
     height: min(90vw - 2rem, 90vh - 2rem);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(var(--row-size), 1fr);
+    grid-template-rows: repeat(var(--row-size), 1fr);
     background-color: rgb(255, 255, 255);
 }
 main > div.snek {
@@ -90,5 +92,5 @@ main > div.hed, .coin.head {
 
 .coin {
     background-color: rgb(0, 183, 0);
-    border: 2rem solid white;
+    border: 2vw solid white;
 }
