@@ -1,26 +1,26 @@
 const restart = document.querySelector('.restart-btn')
 const deid = document.querySelector('.ded')
 const main = document.querySelector('main')
+const row_size = 5
+document.documentElement.style.setProperty('--row-size', row_size)
 let html_grids
 let snek_grids
 let snek_growth_queue
 let snek_direction
 let last_direction
-let ded
+let is_ded
 let coin_index
-let row_size = 7
 
 function start() {
     main.innerHTML = ""
-    ded = false
+    is_ded = false
     deid.innerHTML = "ded"
-    snek_growth_queue = 1
     snek_direction = "right"
     last_direction = snek_direction
+    snek_growth_queue = 1
     for (let i = 0; i < row_size; i++) {
        for (let j = 0; j < row_size; j++) {
-            let div = document.createElement("div")
-            main.appendChild(div)
+            main.appendChild(document.createElement("div"))
         }
     }
     html_grids = document.querySelectorAll('main > div')
@@ -33,7 +33,6 @@ start()
 restart.addEventListener('click', () => {
     start()
 })
-
 
 const left = document.querySelector('.left')
 const right = document.querySelector('.right')
@@ -64,26 +63,37 @@ setInterval(() => {
 }, 600)
 
 function tick() {
-    if (ded) {return}
+    if (is_ded) return
 
     if (snek_direction == "right") {
-        go_right()
+        if (last_direction == "left") {
+            go_left() 
+        } else {
+            go_right()
+        }
+    } else if (snek_direction == "left") {
+        if (last_direction == "right") {
+            go_right() 
+        } else {
+            go_left()
+        }
     }
-    if (snek_direction == "left") {
-        go_left()
+    else if (snek_direction == "up") {
+        if (last_direction == "down") {
+            go_down() 
+        } else {
+            go_up()
+        }
     }
-    if (snek_direction == "up") {
-        go_up()
-    }
-    if (snek_direction == "down") {
-        go_down()
+    else if (snek_direction == "down") {
+        if (last_direction == "up") {
+            go_up()
+        } else {
+            go_down()
+        }
     }
     
     function go_right() {
-        if (last_direction == "left") {
-            go_left()
-            return
-        }
         let looped = false
         let new_snek = snek_grids[0]
         for (let i = 1; i < row_size +1 ; i++) {
@@ -102,10 +112,6 @@ function tick() {
     }
 
     function go_left() {
-        if (last_direction == "right") {
-            go_right()
-            return
-        }
         let looped = false
         let new_snek = snek_grids[0]
         for (let i = 0; i < row_size ; i++) {
@@ -124,10 +130,6 @@ function tick() {
     }
 
     function go_up() {
-        if (last_direction == "down") {
-            go_down()
-            return
-        }
         let looped = false
         let new_snek = snek_grids[0]
         for (let i = 0; i < row_size ; i++) {
@@ -146,10 +148,6 @@ function tick() {
     }
 
     function go_down() {
-        if (last_direction == "up") {
-            go_up()
-            return
-        }
         let looped = false
         let new_snek = snek_grids[0]
         for (let i = (row_size*row_size) -1; i > row_size*(row_size-1) ; i--) {
@@ -184,7 +182,7 @@ function tick() {
             }
         })
         if (tally > 1) {
-            ded = true
+            is_ded = true
         }
     })
 
@@ -198,13 +196,13 @@ function tick() {
     const occupied = document.querySelectorAll('.snek')
     if (occupied.length == html_grids.length) {
         deid.innerHTML = "Dammm, I couldnt even playtest this. Congratulationss"
-        ded = true
+        is_ded = true
     }
     render()
 }
 
 function render() {
-    if (ded) {
+    if (is_ded) {
         deid.classList.add('active')
         return
     } else {

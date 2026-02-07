@@ -16,7 +16,7 @@
     flex-direction: column;
 }
 :root {
-    --row-size: 7;
+    --row-size: 0;
 }
 body {
     height: 100vh;
